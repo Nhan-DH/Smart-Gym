@@ -93,6 +93,14 @@ export const authService = {
     return authService.switchUser('MEMBER');
   },
 
+  changePassword: async (userId: string, oldPass: string, newPass: string): Promise<boolean> => {
+    await new Promise((r) => setTimeout(r, 200));
+    if (newPass.length < 8) {
+      throw new Error('Mật khẩu mới phải có tối thiểu 8 ký tự.');
+    }
+    return true;
+  },
+
   logout: async (): Promise<void> => {
     localStorage.removeItem('smartgym_user');
   },
@@ -157,9 +165,8 @@ export const memberService = {
       member: updated,
       message:
         newStatus === 'LOCKED'
-          ? `Đã khóa tài khoản của ${updated.name}. Toàn bộ phiên đăng nhập đã bị thu hồi. Lý do: ${
-              reason || 'Quản trị viên khóa thủ công'
-            }`
+          ? `Đã khóa tài khoản của ${updated.name}. Toàn bộ phiên đăng nhập đã bị thu hồi. Lý do: ${reason || 'Quản trị viên khóa thủ công'
+          }`
           : `Đã mở khóa tài khoản cho ${updated.name}.`,
     };
   },
@@ -175,6 +182,18 @@ export const memberService = {
         consentAt: undefined,
       };
     }
+  },
+
+  updateProfile: async (
+    id: string,
+    data: { name?: string; phone?: string; goal?: string; preferredTime?: string }
+  ): Promise<DetailedMember> => {
+    await new Promise((r) => setTimeout(r, 200));
+    const idx = membersState.findIndex((m) => m.id === id);
+    if (idx === -1) throw new Error('Không tìm thấy hội viên');
+    const updated = { ...membersState[idx], ...data };
+    membersState[idx] = updated;
+    return updated;
   },
 };
 
@@ -343,6 +362,43 @@ export const trainerService = {
       });
     }
   },
+
+  createTrainer: async (data: {
+    name: string;
+    email: string;
+    phone: string;
+    bio: string;
+    specialties: string[];
+    dailyLimitMinutes?: number;
+  }): Promise<TrainerProfile> => {
+    await new Promise((r) => setTimeout(r, 200));
+    const newId = `PT-${100 + trainersState.length + 1}`;
+    const newTrainer: TrainerProfile = {
+      id: newId,
+      userId: `user-pt-${Date.now()}`,
+      name: data.name.trim(),
+      email: data.email.trim(),
+      phone: data.phone.trim(),
+      bio: data.bio.trim() || 'Huấn luyện viên thể hình chuyên nghiệp SmartGym',
+      specialties: data.specialties.length > 0 ? data.specialties : ['Thể hình cơ bản'],
+      dailyLimitMinutes: data.dailyLimitMinutes || 360,
+      status: 'ACTIVE',
+      assignedMembersCount: 0,
+      completedSessionsCount: 0,
+    };
+    trainersState = [newTrainer, ...trainersState];
+    const newShift: TrainerShift = {
+      id: `shift-${Date.now()}`,
+      trainerId: newId,
+      trainerName: newTrainer.name,
+      dayOfWeek: 1,
+      startTime: '08:00',
+      endTime: '16:00',
+      shiftName: 'Ca làm việc cố định',
+    };
+    shiftsState = [...shiftsState, newShift];
+    return newTrainer;
+  },
 };
 
 // BOOKING SERVICE (Includes CP-SAT Simulation)
@@ -434,6 +490,29 @@ export const bookingService = {
       }
       occupancyState.completedPtToday += 1;
     }
+  },
+
+  submitBookingReview: async (
+    bookingId: string,
+    rating: number,
+    comment?: string,
+    tags?: string[]
+  ): Promise<Booking> => {
+    await new Promise((r) => setTimeout(r, 200));
+    const idx = bookingsState.findIndex((b) => b.id === bookingId);
+    if (idx === -1) throw new Error('Không tìm thấy ca tập');
+    if (bookingsState[idx].status !== 'COMPLETED') {
+      throw new Error('Chỉ có thể đánh giá ca tập đã hoàn thành');
+    }
+    const updated: Booking = {
+      ...bookingsState[idx],
+      rating,
+      reviewComment: comment,
+      reviewTags: tags,
+      reviewedAt: new Date().toISOString(),
+    };
+    bookingsState[idx] = updated;
+    return updated;
   },
 
   // OR-Tools CP-SAT Simulation: generate 3 optimal distinct schedules

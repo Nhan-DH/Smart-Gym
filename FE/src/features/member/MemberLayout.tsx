@@ -11,15 +11,14 @@ import {
   User,
   QrCode,
   Sparkles,
-  LogOut,
-  Activity,
 } from 'lucide-react';
 import { Button } from '../../components/common/Button';
+import { UserDropdown } from '../../components/common/UserDropdown';
 import { MemberQrModal } from './components/MemberQrModal';
 import { cn } from '../../lib/utils';
 
 export const MemberLayout: React.FC = () => {
-  const { user, switchRole, logout } = useAuth();
+  const { user, switchRole } = useAuth();
   const navigate = useNavigate();
   const [isQrOpen, setIsQrOpen] = useState(false);
 
@@ -59,12 +58,6 @@ export const MemberLayout: React.FC = () => {
           </div>
         </div>
 
-        {/* Live gym occupancy meter (pill) */}
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs text-slate-200">
-          <Activity className="w-3.5 h-3.5 text-volt animate-pulse" />
-          <span>Mật độ phòng tập: <strong className="text-volt">32/60</strong> (53%)</span>
-        </div>
-
         {/* Header Right Actions */}
         <div className="flex items-center gap-3">
           {/* Quick Dynamic QR Trigger Button */}
@@ -94,42 +87,39 @@ export const MemberLayout: React.FC = () => {
             </select>
           </div>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={logout}
-            title="Đăng xuất"
-            className="p-1.5 h-8 w-8 text-text-secondary hover:text-red-600"
-          >
-            <LogOut className="w-4 h-4" />
-          </Button>
+          {/* Facebook-style User Avatar & Dropdown */}
+          <UserDropdown onOpenQr={() => setIsQrOpen(true)} className="ml-1" />
         </div>
       </header>
 
-      {/* Desktop Navigation Subheader */}
-      <nav className="bg-darksidebar-bg border-b border-darksidebar-border px-4 sm:px-6 hidden md:flex items-center gap-1 overflow-x-auto">
-        {navLinks.map((tab) => (
-          <NavLink
-            key={tab.href}
-            to={tab.href}
-            end={tab.href === '/app'}
-            className={({ isActive }) =>
-              cn(
-                'flex items-center gap-2 px-4 py-3 text-xs font-semibold transition-colors border-b-2',
-                isActive
-                  ? 'border-volt text-volt bg-darksidebar-surface/60'
-                  : 'border-transparent text-slate-400 hover:text-white hover:bg-darksidebar-surface/30'
-              )
-            }
-          >
-            {tab.icon}
-            <span>{tab.label}</span>
-          </NavLink>
-        ))}
-      </nav>
+      {/* Desktop Navigation Subheader - Full-bleed dark strip with inner content aligned to cards below */}
+      <div className="hidden md:block w-full bg-darksidebar-bg border-b border-darksidebar-border shadow-sm">
+        <div className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-2">
+          <nav className="flex items-center gap-1.5 overflow-x-auto">
+            {navLinks.map((tab) => (
+              <NavLink
+                key={tab.href}
+                to={tab.href}
+                end={tab.href === '/app'}
+                className={({ isActive }) =>
+                  cn(
+                    'flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap',
+                    isActive
+                      ? 'bg-volt text-darksidebar-bg font-bold shadow-sm'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                  )
+                }
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      </div>
 
       {/* Main Content Viewport */}
-      <main className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
         <Outlet />
       </main>
 

@@ -19,6 +19,8 @@ export interface DetailedMember extends User {
   faceSampleCount?: number;
   consentAt?: string;
   joinedAt: string;
+  goal?: string;
+  preferredTime?: string;
 }
 
 export const MOCK_USERS: Record<string, User> = {
@@ -69,6 +71,8 @@ export const MOCK_TRAINERS: TrainerProfile[] = [
     status: 'ACTIVE',
     assignedMembersCount: 18,
     completedSessionsCount: 68,
+    ratingAverage: 4.9,
+    reviewCount: 48,
   },
   {
     id: 'PT-202',
@@ -82,6 +86,8 @@ export const MOCK_TRAINERS: TrainerProfile[] = [
     status: 'ACTIVE',
     assignedMembersCount: 14,
     completedSessionsCount: 52,
+    ratingAverage: 4.8,
+    reviewCount: 36,
   },
   {
     id: 'PT-203',
@@ -95,6 +101,8 @@ export const MOCK_TRAINERS: TrainerProfile[] = [
     status: 'ACTIVE',
     assignedMembersCount: 12,
     completedSessionsCount: 46,
+    ratingAverage: 5.0,
+    reviewCount: 29,
   },
 ];
 
@@ -354,6 +362,35 @@ export const MOCK_BOOKINGS: Booking[] = [
     status: 'NEEDS_RESCHEDULE',
     cancellationReason: 'Huấn luyện viên nghỉ phép được duyệt. Lượt tập được bảo lưu trọn vẹn.',
     workoutTitle: 'Vai & Bụng',
+  },
+  {
+    id: 'bk-5',
+    memberId: 'MB-1001',
+    memberName: 'Nguyễn Văn An',
+    trainerId: 'PT-201',
+    trainerName: 'Lê Hoàng Long',
+    membershipId: 'ms-1',
+    startsAt: '2026-11-23T14:00:00Z',
+    endsAt: '2026-11-23T15:00:00Z',
+    status: 'COMPLETED',
+    workoutTitle: 'Thể lực Cardio & Kháng lực Hiit',
+    // Chưa đánh giá -> Để hội viên bấm thử ngay!
+  },
+  {
+    id: 'bk-6',
+    memberId: 'MB-1001',
+    memberName: 'Nguyễn Văn An',
+    trainerId: 'PT-201',
+    trainerName: 'Lê Hoàng Long',
+    membershipId: 'ms-1',
+    startsAt: '2026-11-20T16:00:00Z',
+    endsAt: '2026-11-20T17:00:00Z',
+    status: 'COMPLETED',
+    workoutTitle: 'Cơ ngực & Tay sau',
+    rating: 5,
+    reviewComment: 'PT Long hướng dẫn rất tỉ mỉ, chỉnh form squat và bench press cực kỳ chuẩn!',
+    reviewTags: ['Đúng giờ', 'Kỹ thuật chuẩn xác', 'Động viên nhiệt tình'],
+    reviewedAt: '2026-11-20T18:00:00Z',
   },
 ];
 

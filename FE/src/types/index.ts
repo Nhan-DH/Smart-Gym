@@ -27,6 +27,8 @@ export interface TrainerProfile {
   status?: 'ACTIVE' | 'INACTIVE';
   assignedMembersCount?: number;
   completedSessionsCount?: number;
+  ratingAverage?: number;
+  reviewCount?: number;
 }
 
 export interface TrainerShift {
@@ -69,6 +71,8 @@ export interface Plan {
 // Detailed Member Profile
 export interface DetailedMember extends User {
   joinedAt: string;
+  goal?: string;
+  preferredTime?: string;
   faceRegistered?: boolean;
   faceSampleCount?: number;
   consentAt?: string;
@@ -132,6 +136,10 @@ export interface Booking {
   status: BookingStatus;
   cancellationReason?: string;
   workoutTitle?: string;
+  rating?: number; // 1 to 5
+  reviewComment?: string;
+  reviewTags?: string[];
+  reviewedAt?: string;
 }
 
 // Workout Plan Types

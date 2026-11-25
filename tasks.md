@@ -76,6 +76,24 @@ Nguyên tắc quản trị: [AGENTS.md](file:///d:/WORKSPACE/Smart-Gym/AGENTS.md
   - [x] **108.5 Thanh phím mô phỏng kiểm thử**: Thử nghiệm tức thì 4 ca nghiệp vụ (Hội viên hợp lệ, Tài khoản bị khóa, Không khớp mặt, Quá tải 60/60).
 - [x] **TASK-109**: Kết nối điều hướng tổng thể trong `AppRoutes.tsx` và Header demo role switcher.
 - [x] **TASK-110**: Kiểm thử TypeScript strict (`npx tsc -b`) đạt 0 lỗi và đóng gói sản phẩm hoàn chỉnh (`npm run build`) trong 15.76s.
+- [x] **TASK-111**: Chuẩn hóa Nghiệp vụ Cấp phát Tài khoản Tập trung (Centralized Account Provisioning):
+  - [x] **111.1**: Cập nhật `design.md` (Mục 2.1, 2.2, 5, 6) chốt mô hình Quản lý/Lễ tân cấp phát tài khoản có kiểm soát an ninh cho cả Hội viên (kèm gói tập ban đầu) và PT (kèm ca trực, chuyên môn, giới hạn giờ dạy).
+  - [x] **111.2**: Điều chỉnh `LoginPage`: Thay link tự đăng ký bằng thông báo hướng dẫn đăng ký trực tiếp tại quầy lễ tân để nhận tài khoản kích hoạt.
+  - [x] **111.3**: Tối ưu `AddMemberDialog` tại `/admin/members`: Cấp tài khoản định danh, chọn gói tập, thu tiền mặt/chuyển khoản, cấp mật khẩu mặc định `SmartGym@123`.
+  - [x] **111.4**: Bổ sung `AddTrainerDialog` tại `/admin/trainers`: Cấp tài khoản nội bộ cho PT kèm chuyên môn, giới hạn giờ dạy (CP-SAT bound), mật khẩu mặc định `SmartGym@PT123`.
+  - [x] **111.5**: Nâng cấp `MemberProfilePage`: Bổ sung form đổi mật khẩu cá nhân bảo mật và cập nhật mục tiêu rèn luyện/thông tin liên hệ.
+  - [x] **111.6**: Xây dựng `UserDropdown` phong cách Facebook: Avatar tròn kèm mũi tên chevron nhỏ ở góc dưới, mở thẻ menu hồ sơ cá nhân nổi bật, các nút tính năng bo tròn có icon xám và mũi tên điều hướng, phím tắt Dynamic QR, đổi mật khẩu và nút Đăng xuất chuyển về `/auth/login`. Tích hợp đồng bộ cho Cổng Hội viên (`MemberLayout`), Cổng PT (`TrainerLayout`) và Cổng Quản lý (`Header`).
+  - [x] **111.7**: Tối ưu cân đối trung tâm cho 2 thanh trên cùng (Top Header & Navigation Tabs) tại Cổng Hội viên và Cổng PT: Bao bọc nội dung trong container `max-w-6xl w-full mx-auto`, căn giữa toàn bộ các tab điều hướng (`justify-center`), khắc phục triệt để tình trạng lệch trái và khoảng trống thừa bên phải.
+  - [x] **111.8**: Xây dựng & Tích hợp Tính năng Đánh giá PT (PT Rating & Review):
+    - Bổ sung quy tắc nghiệp vụ trong `design.md`: Đánh giá 1 lần (idempotency) sau khi ca tập hoàn thành (`COMPLETED`), thu thập số sao (1-5★), tiêu chí nhanh (tags) và nhận xét.
+    - Xây dựng modal tương tác `ReviewTrainerModal.tsx` tại Cổng Hội viên (`/app/schedule`).
+    - Hiển thị huy hiệu đánh giá sao vàng, nhận xét đã gửi và nút "Đánh giá PT" trực quan.
+    - Hiển thị điểm rating trung bình của từng PT tại Cổng Quản trị (`TrainersPage`).
+  - [x] **111.9**: Kiểm tra toàn bộ codebase đạt 0 lỗi TypeScript strict (`npx tsc -b`) và đóng gói thành công (`npm run build`).
+  - [x] **111.10**: Tối ưu thanh chức năng điều hướng và lược bỏ mật độ phòng tập:
+    - Loại bỏ hoàn toàn widget mật độ phòng tập (`Mật độ phòng tập: 32/60`) trên header Cổng Hội viên (`MemberLayout`) và Cổng PT (`TrainerLayout`).
+    - Điều chỉnh thanh điều hướng chức năng bên dưới (`nav`) với lớp nền đen trải dài 100% toàn màn hình (`w-full bg-darksidebar-bg border-b border-darksidebar-border shadow-sm`), trong khi các tab nội dung bên trong được bao bọc trong container `max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-2`, khớp hoàn hảo với chiều ngang của các thẻ thông tin bên dưới.
+    - Bổ sung thanh điều hướng đáy di động cho Cổng PT (`TrainerLayout`) đồng bộ với Cổng Hội viên.
 
 ---
 

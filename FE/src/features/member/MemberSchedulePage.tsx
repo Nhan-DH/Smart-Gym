@@ -16,7 +16,9 @@ import {
   Plus,
   Sparkles,
   CheckCircle2,
+  Star,
 } from 'lucide-react';
+import { ReviewTrainerModal } from './components/ReviewTrainerModal';
 
 export const MemberSchedulePage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,6 +29,9 @@ export const MemberSchedulePage: React.FC = () => {
   // Cancel modal state
   const [cancelTarget, setCancelTarget] = useState<Booking | null>(null);
   const [cancelResult, setCancelResult] = useState<{ refunded: boolean; message: string } | null>(null);
+
+  // Review PT modal state
+  const [reviewTarget, setReviewTarget] = useState<Booking | null>(null);
 
   const loadData = async () => {
     try {
@@ -51,6 +56,16 @@ export const MemberSchedulePage: React.FC = () => {
     } catch (err) {
       alert((err as Error).message);
     }
+  };
+
+  const handleReviewSubmit = async (
+    bookingId: string,
+    rating: number,
+    comment?: string,
+    tags?: string[]
+  ) => {
+    await bookingService.submitBookingReview(bookingId, rating, comment, tags);
+    loadData();
   };
 
   const upcomingBookings = bookings.filter(
@@ -146,7 +161,21 @@ export const MemberSchedulePage: React.FC = () => {
                       {isNeedsReschedule && (
                         <Badge variant="warning">PT nghỉ phép - Bảo lưu lượt</Badge>
                       )}
-                      {booking.status === 'COMPLETED' && <Badge variant="neutral">Đã hoàn thành</Badge>}
+                      {booking.status === 'COMPLETED' && (
+                        <div className="flex items-center gap-2">
+                          <Badge variant="neutral">Đã hoàn thành</Badge>
+                          {booking.rating ? (
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-bold">
+                              <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+                              <span>{booking.rating}.0 • Đã đánh giá</span>
+                            </div>
+                          ) : (
+                            <span className="text-[11px] text-amber-700 font-semibold bg-amber-100/70 px-2 py-0.5 rounded">
+                              Chưa đánh giá
+                            </span>
+                          )}
+                        </div>
+                      )}
                       {booking.status === 'CANCELLED' && <Badge variant="danger">Đã hủy</Badge>}
                     </div>
 
@@ -172,6 +201,40 @@ export const MemberSchedulePage: React.FC = () => {
                         {booking.cancellationReason}
                       </div>
                     )}
+
+                    {/* Member's Rating & Review Details (if already submitted) */}
+                    {booking.rating && (
+                      <div className="p-3 rounded-md bg-amber-50/70 border border-amber-200/80 text-xs text-amber-950 space-y-1.5 mt-2">
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center text-amber-500">
+                            {[...Array(booking.rating)].map((_, i) => (
+                              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                            ))}
+                          </div>
+                          <span className="font-bold text-[11px] text-amber-900">Đánh giá của bạn</span>
+                          {booking.reviewedAt && (
+                            <span className="text-[10px] text-slate-500 font-mono ml-auto">
+                              {new Date(booking.reviewedAt).toLocaleDateString('vi-VN')}
+                            </span>
+                          )}
+                        </div>
+                        {booking.reviewComment && (
+                          <p className="text-[11px] text-slate-700 italic">"{booking.reviewComment}"</p>
+                        )}
+                        {booking.reviewTags && booking.reviewTags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 pt-0.5">
+                            {booking.reviewTags.map((tag, idx) => (
+                              <span
+                                key={idx}
+                                className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white border border-amber-300 text-amber-900 shadow-2xs"
+                              >
+                                ✓ {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Actions */}
@@ -188,6 +251,21 @@ export const MemberSchedulePage: React.FC = () => {
                         icon={<XCircle className="w-3.5 h-3.5" />}
                       >
                         Hủy buổi tập
+                      </Button>
+                    </div>
+                  )}
+
+                  {/* Review Action Button for Completed & Unrated Sessions */}
+                  {booking.status === 'COMPLETED' && !booking.rating && (
+                    <div className="shrink-0">
+                      <Button
+                        variant="volt"
+                        size="sm"
+                        onClick={() => setReviewTarget(booking)}
+                        icon={<Star className="w-3.5 h-3.5 fill-darksidebar-bg" />}
+                        className="font-bold shadow-xs"
+                      >
+                        Đánh giá PT
                       </Button>
                     </div>
                   )}
@@ -267,6 +345,14 @@ export const MemberSchedulePage: React.FC = () => {
           )}
         </DialogFooter>
       </Dialog>
+
+      {/* Review Trainer Modal */}
+      <ReviewTrainerModal
+        booking={reviewTarget}
+        isOpen={!!reviewTarget}
+        onClose={() => setReviewTarget(null)}
+        onSubmit={handleReviewSubmit}
+      />
     </div>
   );
 };

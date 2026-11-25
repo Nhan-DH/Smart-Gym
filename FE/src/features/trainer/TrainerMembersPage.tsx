@@ -44,7 +44,7 @@ export const TrainerMembersPage: React.FC = () => {
             const ms = m.membership!;
             const available = Math.max(0, ms.totalPt - ms.usedPt - ms.reservedPt);
             return (
-              <Card key={m.id} className="p-5 flex flex-col justify-between">
+              <Card key={m.id} className="p-5 flex flex-col justify-between h-full min-h-[260px]">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div className="flex items-center gap-3">

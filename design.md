@@ -10,7 +10,16 @@ Web responsive cho quản lý, hội viên và PT. Hệ thống tự động là
 
 ### 2.1 Quản lý
 
--   Tài khoản: tạo PT, khóa/mở khóa hội viên, tìm kiếm, cập nhật hồ sơ. Email duy nhất; không xóa lịch sử khi khóa tài khoản; thu hồi phiên đăng nhập khi khóa.
+-   Tài khoản & Cấp phát tập trung (Centralized Provisioning):
+    -   SmartGym áp dụng mô hình cấp phát tài khoản tập trung có kiểm soát an ninh tại quầy, không mở đăng ký tự do công khai nhằm triệt tiêu 100% tài khoản ảo/rác và đảm bảo định danh người thật cho khâu sinh trắc học Face ID.
+    -   Cấp phát tài khoản Hội viên tại quầy: Lễ tân/Quản lý nhập họ tên, số điện thoại, email định danh, chọn gói tập ban đầu và thu tiền mặt/chuyển khoản. Hệ thống tạo tài khoản User (ACTIVE), kích hoạt gói tập Membership (ACTIVE), cấp mật khẩu mặc định (ví dụ SmartGym@123) và hướng dẫn hội viên nạp 3--5 mẫu khuôn mặt tại Kiosk.
+    -   Tạo và cấp phát tài khoản Huấn luyện viên (PT): Quản lý tạo tài khoản nội bộ cho PT kèm thông tin chuyên môn, ca làm việc cố định trong tuần, giới hạn giờ dạy tối đa/ngày (daily_limit_minutes, ví dụ 360 phút). PT không tự đăng ký tài khoản tự do.
+    -   Khóa và mở khóa tài khoản: Quản lý có thẩm quyền khóa tài khoản hội viên vi phạm quy chế hoặc tranh chấp tài chính. Khi khóa tài khoản:
+        *   Thu hồi ngay lập tức toàn bộ phiên đăng nhập (Session/Token Revocation), ép đăng xuất trên mọi thiết bị bằng cơ chế tăng token_version.
+        *   Chặn tức thì quyền vào phòng tại Kiosk (từ chối nhận diện Face ID và từ chối mã QR, hiển thị thông báo yêu cầu gặp lễ tân).
+        *   Bảo tồn toàn vẹn dữ liệu lịch sử (No hard delete): giữ nguyên nhật ký ra vào, đơn hàng, hóa đơn và lịch tập đã qua để phục vụ đối soát tài chính và kiểm toán.
+        *   Tự động hủy các lịch tập tương lai đang ở trạng thái CONFIRMED và hoàn lại lượt tập về tài khoản (hoặc giữ trạng thái treo theo chính sách xử lý kỷ luật).
+    -   Tìm kiếm, lọc danh sách, xem chi tiết và cập nhật thông tin hồ sơ người dùng.
 -   Gói tập: tạo/sửa/ngừng bán, giá VND, thời hạn, quyền vào phòng, số lượt PT. Giá và quyền lợi đã bán được snapshot; không sửa hồi tố. Gói ngừng bán vẫn có hiệu lực với người đã mua.
 -   Thanh toán: xem đơn chờ, đối chiếu tiền mặt/chuyển khoản, xác nhận hoặc từ chối có lý do. Thiếu tiền: giữ trạng thái chờ; thừa tiền: xử lý thủ công; xác nhận lặp không tạo thêm gói. Hoàn tiền là giao dịch điều chỉnh có nhật ký; kiểm tra lịch tương lai trước khi thu hồi quyền lợi.
 -   PT: quản lý chuyên môn, ca làm việc, giới hạn giờ/ngày, nghỉ phép. Không nhận lịch ngoài ca; nghỉ có lịch đã đặt thì chuyển sang cần sắp xếp lại, giữ lượt đến khi đổi hoặc hủy.
@@ -21,12 +30,18 @@ Web responsive cho quản lý, hội viên và PT. Hệ thống tự động là
 
 ### 2.2 Hội viên
 
--   Đăng ký/đăng nhập, cập nhật hồ sơ, mục tiêu, thời gian rảnh; email trùng thì hướng dẫn đăng nhập; tài khoản khóa không được sử dụng dịch vụ.
+-   Tài khoản & Đăng nhập (Account & Authentication):
+    -   Hội viên nhận tài khoản do Ban quản lý/Lễ tân cấp phát tại quầy khi đăng ký gói tập, không có luồng tự đăng ký tự do trên web.
+    -   Đăng nhập hệ thống bằng Email và Mật khẩu khởi tạo được cấp, hỗ trợ ghi nhớ phiên đăng nhập qua Refresh Token.
+    -   Quản lý Hồ sơ & Bảo mật: Tự cập nhật mục tiêu tập luyện (goal), thời gian rảnh mong muốn, đổi mật khẩu cá nhân tại trang Hồ sơ. Email là định danh cốt lõi do quầy quản lý xác thực, không tự ý sửa đổi tùy tiện.
+    -   Tài khoản bị khóa (status = LOCKED): Bị chặn đăng nhập và từ chối mọi quyền sử dụng dịch vụ trên cổng hội viên và cổng Kiosk.
+    -   Quyền riêng tư & Xóa dữ liệu sinh trắc học (Right to be Forgotten): Hội viên có toàn quyền tự xem trạng thái khuôn mặt và yêu cầu xóa vĩnh viễn vector khuôn mặt (face_templates) bất kỳ lúc nào trên trang cá nhân. Sau khi xóa, quyền ra vào phòng tập vẫn được bảo lưu 100% bằng phương thức dự phòng Dynamic QR Code.
 -   Xem gói, tạo đơn, chọn phương thức thanh toán, theo dõi trạng thái, gia hạn. Gói chưa thanh toán không cấp quyền; gia hạn cùng loại bắt đầu sau gói hiện tại theo chính sách.
 -   Check-in tại kiosk bằng mặt hoặc QR; kiểm tra quyền vào phòng, giờ mở cửa, sức chứa, phiên đang mở. Không nhận diện chắc chắn thì thử lại hoặc xác minh thay thế. Check-out vẫn được phép nếu gói hết hạn trong lúc tập.
 -   Đặt lịch thủ công: chọn gói PT, PT, ngày và slot 60 phút; xác nhận thì giữ một lượt. Slot vừa bị đặt: trả 409 và tải lại. Gửi lặp: trả kết quả cũ.
 -   Đặt lịch thông minh: nhập số buổi/tuần, ngày/giờ rảnh, mục tiêu, PT ưu tiên, cho phép đổi PT, ưu tiên ít đông. Xem tối đa 3 phương án; đề xuất không giữ chỗ. Không đủ lượt/ngày/slot: giải thích và đề xuất một phần, không tự nới điều kiện bắt buộc. Xác nhận cả phương án trong một transaction; xung đột thì rollback và tính lại.
 -   Đổi/hủy: đổi lịch thành công mới giải phóng lịch cũ. Hủy trước ít nhất 12 giờ hoàn lượt; hủy muộn hoặc vắng mặt tính lượt; PT/phòng Gym hủy luôn hoàn lượt. Đây là chính sách giả định có thể cấu hình.
+-   Đánh giá buổi tập (PT Rating): Sau khi ca tập hoàn thành (COMPLETED), hội viên được đánh giá chất lượng buổi tập (1--5 sao, chọn tag tiêu chuẩn, nhận xét chi tiết) đúng một lần (idempotency); ca tập chưa diễn ra hoặc đã hủy không được phép đánh giá.
 -   Xem giáo án, kết quả buổi tập, lịch sử ra vào, mật độ hiện tại, thông báo trong web.
 
 ### 2.3 PT
@@ -123,11 +138,12 @@ Prefix /api/v1. JSON, JWT, validate DTO. Lỗi dạng {code,message,details,requ
   -----------------------------------------------------------------------------------------------------
   Method + path                                                   Vai trò / mục đích
   --------------------------------------------------------------- -------------------------------------
-  POST /auth/register, /auth/login, /auth/refresh, /auth/logout   đăng ký hội viên, xác thực
+  POST /auth/login, /auth/refresh, /auth/logout, /auth/change-password   xác thực tài khoản, đổi mật khẩu
 
   GET/PATCH /me                                                   hồ sơ cá nhân
+  DELETE /me/face                                                 hội viên tự xóa mẫu khuôn mặt (GDPR)
 
-  GET /members; PATCH /members/:id/status                         Manager
+  GET /members; POST /members; PATCH /members/:id/status          Manager (quản lý, cấp phát tại quầy, khóa/mở)
 
   GET /plans; POST /plans; PATCH /plans/:id                       xem công khai; ghi Manager
 
@@ -137,7 +153,7 @@ Prefix /api/v1. JSON, JWT, validate DTO. Lỗi dạng {code,message,details,requ
 
   GET /me/memberships                                             Member
 
-  GET /trainers; POST /trainers; PATCH /trainers/:id              xem Member; ghi Manager
+  GET /trainers; POST /trainers; PATCH /trainers/:id              xem Member; cấp phát tài khoản PT Manager
 
   GET /trainers/:id/availability                                  Member/Manager
 
@@ -152,6 +168,7 @@ Prefix /api/v1. JSON, JWT, validate DTO. Lỗi dạng {code,message,details,requ
   POST /bookings/:id/reschedule; /bookings/:id/cancel             Member/Manager theo quyền
 
   POST /bookings/:id/start; /complete; /no-show                   PT phụ trách
+  POST /bookings/:id/review                                       Member đánh giá ca tập COMPLETED (1-5 sao, tag)
 
   POST /members/:id/face/enroll; DELETE /members/:id/face         Manager có xác minh/đồng ý
 

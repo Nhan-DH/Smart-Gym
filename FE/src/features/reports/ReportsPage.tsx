@@ -72,51 +72,68 @@ export const ReportsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 bg-surface">
-          <div className="flex items-center justify-between text-text-secondary mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">Doanh thu tuần này</span>
-            <DollarSign className="w-4 h-4 text-emerald-600" />
+      {/* KPI Overview Cards - Equal Heights */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
+        <Card className="p-4 bg-surface h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-text-secondary mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Doanh thu tuần này</span>
+              <DollarSign className="w-4 h-4 text-emerald-600" />
+            </div>
+            <div className="text-2xl font-black text-text-primary tracking-tight">58.600.000 đ</div>
           </div>
-          <div className="text-2xl font-black text-text-primary tracking-tight">58.600.000 đ</div>
-          <div className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1 mt-1">
+          <div className="text-[11px] text-emerald-600 font-bold flex items-center gap-1 mt-3 pt-2 border-t border-border">
             <ArrowUpRight className="w-3.5 h-3.5" /> +14.2% so với tuần trước
           </div>
         </Card>
 
-        <Card className="p-4 bg-surface">
-          <div className="flex items-center justify-between text-text-secondary mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">Tổng số ca PT hoàn thành</span>
-            <Dumbbell className="w-4 h-4 text-volt-dark" />
+        <Card className="p-4 bg-surface h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-text-secondary mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Tổng ca PT hoàn thành</span>
+              <Dumbbell className="w-4 h-4 text-volt-dark" />
+            </div>
+            <div className="text-2xl font-black text-text-primary tracking-tight">178 ca (60p)</div>
           </div>
-          <div className="text-2xl font-black text-text-primary tracking-tight">178 ca (60p)</div>
-          <div className="text-[11px] text-text-secondary mt-1">Tỷ lệ hoàn thành: 92.4%</div>
+          <div className="text-[11px] text-text-secondary mt-3 pt-2 border-t border-border flex justify-between">
+            <span>Tỷ lệ hoàn thành</span>
+            <span className="font-bold text-emerald-600">92.4%</span>
+          </div>
         </Card>
 
-        <Card className="p-4 bg-surface">
-          <div className="flex items-center justify-between text-text-secondary mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">Khung giờ đông nhất</span>
-            <TrendingUp className="w-4 h-4 text-amber-600" />
+        <Card className="p-4 bg-surface h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-text-secondary mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Khung giờ cao điểm</span>
+              <TrendingUp className="w-4 h-4 text-amber-600" />
+            </div>
+            <div className="text-2xl font-black text-text-primary tracking-tight">17:30 — 19:30</div>
           </div>
-          <div className="text-2xl font-black text-text-primary tracking-tight">17:30 — 19:30</div>
-          <div className="text-[11px] text-amber-600 font-medium mt-1">Công suất đạt 93% (56/60)</div>
+          <div className="text-[11px] text-amber-600 font-semibold mt-3 pt-2 border-t border-border flex justify-between">
+            <span>Công suất tải đỉnh</span>
+            <span className="font-bold">93% (56/60)</span>
+          </div>
         </Card>
 
-        <Card className="p-4 bg-slate-900 border-slate-700 text-white">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">PT xuất sắc nhất</span>
-            <Award className="w-4 h-4 text-volt" />
+        <Card className="p-4 bg-slate-900 border-slate-700 text-white h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-slate-400 mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">PT xuất sắc nhất</span>
+              <Award className="w-4 h-4 text-volt" />
+            </div>
+            <div className="text-xl font-black text-volt tracking-tight">Lê Hoàng Long</div>
           </div>
-          <div className="text-xl font-black text-volt tracking-tight">Lê Hoàng Long</div>
-          <div className="text-[11px] text-slate-300 mt-1">68 ca tập • Đánh giá 4.9/5.0</div>
+          <div className="text-[11px] text-slate-300 mt-3 pt-2 border-t border-slate-800 flex justify-between">
+            <span>68 ca huấn luyện</span>
+            <span className="text-volt font-bold">4.9 / 5.0 ★</span>
+          </div>
         </Card>
       </div>
 
-      {/* Main Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      {/* Main Charts Row - Equal Heights */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
         {/* Revenue Chart (2 cols) */}
-        <Card className="p-5 lg:col-span-2">
+        <Card className="p-5 lg:col-span-2 h-full flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-bold text-sm text-text-primary">Doanh thu theo ngày trong tuần</h3>
@@ -143,7 +160,7 @@ export const ReportsPage: React.FC = () => {
         </Card>
 
         {/* PT Session Completion Pie (1 col) */}
-        <Card className="p-5">
+        <Card className="p-5 h-full flex flex-col justify-between">
           <h3 className="font-bold text-sm text-text-primary mb-1">Tỷ lệ thực hiện ca tập PT</h3>
           <p className="text-xs text-text-secondary mb-4">Phân tích thực thi chính sách hủy 12h</p>
           <div className="h-56">

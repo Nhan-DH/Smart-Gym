@@ -15,7 +15,10 @@ import {
   Users,
   Dumbbell,
   ShieldAlert,
+  Plus,
+  Star,
 } from 'lucide-react';
+import { AddTrainerDialog } from './components/AddTrainerDialog';
 
 export const TrainersPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'PROFILES' | 'SHIFTS' | 'LEAVES'>('PROFILES');
@@ -23,6 +26,7 @@ export const TrainersPage: React.FC = () => {
   const [shifts, setShifts] = useState<TrainerShift[]>([]);
   const [leaves, setLeaves] = useState<LeaveRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAddTrainerOpen, setIsAddTrainerOpen] = useState(false);
 
   // Leave approval confirmation
   const [selectedLeave, setSelectedLeave] = useState<LeaveRequest | null>(null);
@@ -73,6 +77,14 @@ export const TrainersPage: React.FC = () => {
             Quản lý hồ sơ PT, phân ca làm việc cố định và phê duyệt đơn nghỉ phép bảo vệ lịch tập của hội viên
           </p>
         </div>
+        <Button
+          variant="volt"
+          onClick={() => setIsAddTrainerOpen(true)}
+          icon={<Plus className="w-4 h-4 text-black" />}
+          className="font-bold shadow-sm"
+        >
+          Cấp tài khoản PT mới
+        </Button>
       </div>
 
       {/* Main Tabs */}
@@ -118,38 +130,47 @@ export const TrainersPage: React.FC = () => {
       {activeTab === 'PROFILES' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {trainers.map((trainer) => (
-            <Card key={trainer.id} className="relative p-5">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-md bg-slate-900 text-volt flex items-center justify-center font-black text-lg border border-slate-700 shrink-0">
-                  {trainer.name.charAt(0)}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-bold text-base text-text-primary">{trainer.name}</h3>
-                    <Badge variant={trainer.status === 'ACTIVE' ? 'success' : 'neutral'}>
-                      {trainer.status === 'ACTIVE' ? 'Đang hoạt động' : 'Tạm nghỉ'}
-                    </Badge>
+            <Card key={trainer.id} className="h-full flex flex-col justify-between p-5 relative">
+              <div className="flex flex-col flex-1">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-md bg-slate-900 text-volt flex items-center justify-center font-black text-lg border border-slate-700 shrink-0">
+                    {trainer.name.charAt(0)}
                   </div>
-                  <div className="text-xs text-text-secondary mt-0.5">{trainer.phone} • {trainer.email}</div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-bold text-base text-text-primary">{trainer.name}</h3>
+                      <Badge variant={trainer.status === 'ACTIVE' ? 'success' : 'neutral'}>
+                        {trainer.status === 'ACTIVE' ? 'Đang hoạt động' : 'Tạm nghỉ'}
+                      </Badge>
+                    </div>
+                    <div className="text-xs text-text-secondary mt-0.5">{trainer.phone} • {trainer.email}</div>
+                    <div className="flex items-center gap-1.5 mt-1.5 text-xs">
+                      <span className="inline-flex items-center gap-1 font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 text-[11px]">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        {trainer.ratingAverage ? trainer.ratingAverage.toFixed(1) : '5.0'}
+                      </span>
+                      <span className="text-[11px] text-text-secondary">({trainer.reviewCount || 0} đánh giá)</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bio & Specialties */}
+                <div className="mt-4 pt-3 border-t border-border flex-1">
+                  <div className="text-xs text-text-secondary line-clamp-2 min-h-[32px]">{trainer.bio}</div>
+                  <div className="flex flex-wrap gap-1.5 mt-2.5">
+                    {trainer.specialties.map((spec, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200"
+                      >
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Bio & Specialties */}
-              <div className="mt-4 pt-3 border-t border-border">
-                <div className="text-xs text-text-secondary line-clamp-2">{trainer.bio}</div>
-                <div className="flex flex-wrap gap-1.5 mt-2.5">
-                  {trainer.specialties.map((spec, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200"
-                    >
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Stats Footer */}
+              {/* Stats Footer - Pinned to exact bottom */}
               <div className="mt-5 grid grid-cols-2 gap-2 p-2.5 rounded-md bg-slate-50 border border-border text-xs">
                 <div>
                   <span className="text-text-secondary block text-[11px]">Học viên phụ trách</span>
@@ -328,6 +349,13 @@ export const TrainersPage: React.FC = () => {
           </Button>
         </DialogFooter>
       </Dialog>
+
+      {/* Add Trainer Dialog */}
+      <AddTrainerDialog
+        isOpen={isAddTrainerOpen}
+        onClose={() => setIsAddTrainerOpen(false)}
+        onSuccess={() => loadData()}
+      />
     </div>
   );
 };

@@ -122,7 +122,7 @@ export const PlansPage: React.FC = () => {
             return (
               <Card
                 key={plan.id}
-                className={`relative flex flex-col justify-between transition-all ${
+                className={`relative flex flex-col justify-between transition-all h-full p-5 ${
                   plan.highlight ? 'border-volt-border ring-1 ring-volt/40' : ''
                 } ${isDiscontinued ? 'opacity-65 bg-slate-50' : 'bg-surface'}`}
               >
@@ -132,11 +132,11 @@ export const PlansPage: React.FC = () => {
                   </div>
                 )}
 
-                <div>
-                  <div className="flex items-start justify-between gap-3 mb-2">
+                <div className="flex flex-col flex-1">
+                  <div className="flex items-start justify-between gap-3 mb-2 min-h-[48px]">
                     <div>
                       <h3 className="font-bold text-base text-text-primary">{plan.name}</h3>
-                      <div className="text-xs text-text-secondary mt-0.5">{plan.description}</div>
+                      <div className="text-xs text-text-secondary mt-0.5 line-clamp-1">{plan.description}</div>
                     </div>
                     <Badge variant={isDiscontinued ? 'neutral' : 'success'}>
                       {isDiscontinued ? 'Ngưng bán' : 'Đang mở'}
@@ -144,7 +144,7 @@ export const PlansPage: React.FC = () => {
                   </div>
 
                   {/* Price */}
-                  <div className="my-4 py-3 px-3.5 rounded-md bg-slate-50 border border-border/80">
+                  <div className="my-3 py-3 px-3.5 rounded-md bg-slate-50 border border-border/80">
                     <div className="text-[11px] text-text-secondary font-medium">Giá niêm yết</div>
                     <div className="text-2xl font-black text-text-primary tracking-tight">
                       {plan.priceVnd.toLocaleString('vi-VN')}{' '}
@@ -157,7 +157,7 @@ export const PlansPage: React.FC = () => {
                   </div>
 
                   {/* Features List */}
-                  <div className="space-y-2 text-xs mb-6">
+                  <div className="space-y-2 text-xs mb-4 flex-1">
                     <div className="flex items-center gap-2 text-text-primary">
                       <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3" />
@@ -184,8 +184,8 @@ export const PlansPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Bottom Actions */}
-                <div className="pt-3 border-t border-border flex items-center justify-between gap-3">
+                {/* Bottom Actions - Pinned to exact bottom */}
+                <div className="pt-3 border-t border-border flex items-center justify-between gap-3 mt-auto">
                   <span className="text-[10px] text-text-muted font-mono uppercase">ID: {plan.id}</span>
                   <Button
                     variant={isDiscontinued ? 'secondary' : 'ghost'}

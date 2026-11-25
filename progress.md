@@ -73,3 +73,24 @@ Cập nhật liên tục theo từng mốc công việc hoàn thành.
    - `npx tsc -b`: 0 lỗi TypeScript strict.
    - `npm run build`: Đóng gói thành công trong 15.76s với đầy đủ assets.
    - Máy chủ phát triển Vite đang chạy trực tiếp tại: **`http://localhost:5173/`** (HTTP 200).
+
+### [2026-11-25] Chuẩn hóa Toàn diện Nghiệp vụ & Giao diện Cấp phát Tài khoản Tập trung (Centralized Provisioning)
+1. **Thống nhất nghiệp vụ trong `design.md`**:
+   - Cả **Hội viên (Member)** và **Huấn luyện viên (PT)** đều được **Ban quản lý / Lễ tân cấp phát tài khoản tập trung có kiểm soát an ninh tại quầy**.
+   - Triệt tiêu 100% tài khoản rác/ảo trên mạng; đảm bảo định danh người thật trước khi nạp mẫu Face ID tại Kiosk.
+2. **Cập nhật Giao diện & Luồng màn hình**:
+   - `LoginPage`: Loại bỏ link tự đăng ký tự do, thay bằng thông báo hướng dẫn khách đến quầy lễ tân để đăng ký và nhận tài khoản kích hoạt.
+   - `AddMemberDialog` (`/admin/members`): Form cấp tài khoản hội viên tại quầy, chọn gói tập, chọn hình thức thanh toán (Tiền mặt/Chuyển khoản VietQR), cấp mật khẩu khởi tạo `SmartGym@123`.
+   - `AddTrainerDialog` (`/admin/trainers`): Nút "Cấp tài khoản PT mới", nhập chuyên môn huấn luyện, ca trực, giới hạn giờ dạy tối đa/ngày (daily_limit_minutes), cấp mật khẩu `SmartGym@PT123`.
+   - `MemberProfilePage` (`/app/profile`): Nâng cấp thêm form Đổi mật khẩu cá nhân bảo mật và form chỉnh sửa mục tiêu rèn luyện / thông tin liên hệ.
+   - `UserDropdown`: Xây dựng menu tài khoản chuẩn phong cách Facebook với avatar tròn có mũi tên chevron nhỏ ở góc, thẻ hồ sơ mini ở đầu menu, các mục điều hướng có icon tròn xám và mũi tên sang phải, và nút Đăng xuất đỏ tinh tế. Tích hợp trên Member, PT và Manager.
+   - **Tối ưu Cân đối Trung tâm 2 Thanh Trên cùng**: Căn chỉnh Header và Navigation Bar tại Member Portal và PT Portal vào container `max-w-6xl w-full mx-auto`, căn giữa toàn bộ các tab điều hướng (`justify-center`), tạo sự cân đối thị giác hoàn hảo.
+   - **Xây dựng Giao diện Đánh giá PT (PT Rating & Review)**: Thêm modal tương tác `ReviewTrainerModal` (chọn 1-5 sao, chọn tag tiêu chuẩn, nhận xét), tích hợp vào trang Lịch tập hội viên (`/app/schedule`), hiển thị huy hiệu sao vàng cho ca đã đánh giá và điểm rating trung bình của từng PT tại Cổng Quản lý.
+    - **Cân đối Thanh Chức năng & Bỏ Mật độ Phòng tập tại Cổng Hội viên & Cổng PT**:
+      + Đã loại bỏ hoàn toàn widget đo mật độ phòng tập (`Mật độ phòng tập: 32/60`) trên header Cổng Hội viên (`MemberLayout`) và Cổng PT (`TrainerLayout`).
+      + Điều chỉnh thanh chức năng điều hướng bên dưới (`<nav>`): Lớp nền đen than `#0A0D14` trải dài 100% toàn màn hình (`w-full bg-darksidebar-bg border-b border-darksidebar-border shadow-sm`), trong khi khối tab nội dung bên trong được bao bọc trong container `max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-2`, giúp các tab bên trong căn chỉnh chính xác tuyệt đối với lề trái - phải của các thẻ thông tin phía dưới.
+      + Bổ sung thanh điều hướng đáy di động cho Cổng Huấn luyện viên (`TrainerLayout`) đồng bộ với Cổng Hội viên.
+3. **Kiểm tra hoàn thành**:
+   - `npx tsc -b`: 0 lỗi TypeScript.
+   - `npm run build`: Đóng gói 2151 modules thành công trong 7.36s.
+   - Vite dev server hot-reload mượt mà tại `http://localhost:5173/`.

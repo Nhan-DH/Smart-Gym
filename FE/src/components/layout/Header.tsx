@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { UserRole } from '../../types';
-import { Bell, Activity, LogOut, Sparkles } from 'lucide-react';
-import { Button } from '../common/Button';
+import { Bell, Activity, Sparkles } from 'lucide-react';
+import { UserDropdown } from '../common/UserDropdown';
 
 export const Header: React.FC = () => {
-  const { user, switchRole, logout } = useAuth();
+  const { user, switchRole } = useAuth();
   const navigate = useNavigate();
 
   const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,27 +59,8 @@ export const Header: React.FC = () => {
           <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-status-danger ring-2 ring-white" />
         </button>
 
-        {/* User Info & Logout */}
-        <div className="flex items-center gap-3 pl-2 border-l border-border">
-          <div className="w-8 h-8 rounded-full bg-slate-900 text-volt font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700">
-            {user.name.charAt(0)}
-          </div>
-          <div className="hidden lg:block text-left">
-            <div className="text-xs font-bold text-text-primary leading-tight">{user.name}</div>
-            <div className="text-[10px] text-text-secondary uppercase tracking-wider font-semibold">
-              {user.role}
-            </div>
-          </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={logout}
-            title="Đăng xuất"
-            className="p-1.5 h-8 w-8 text-text-secondary hover:text-status-danger"
-          >
-            <LogOut className="w-4 h-4" />
-          </Button>
-        </div>
+        {/* Facebook-style User Avatar & Dropdown */}
+        <UserDropdown className="pl-2 border-l border-border" />
       </div>
     </header>
   );

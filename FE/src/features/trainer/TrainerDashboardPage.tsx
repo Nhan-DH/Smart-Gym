@@ -63,35 +63,50 @@ export const TrainerDashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Overview */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="p-4 bg-surface">
-          <div className="flex items-center justify-between text-text-secondary mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">Lịch dạy hôm nay</span>
-            <Calendar className="w-4 h-4 text-volt-dark" />
+      {/* KPI Overview - Equal Heights */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch">
+        <Card className="p-4 bg-surface h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-text-secondary mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Lịch dạy hôm nay</span>
+              <Calendar className="w-4 h-4 text-volt-dark" />
+            </div>
+            <div className="text-2xl font-black text-text-primary tracking-tight">
+              {todayBookings.length} ca tập
+            </div>
           </div>
-          <div className="text-2xl font-black text-text-primary tracking-tight">
-            {todayBookings.length} ca tập
+          <div className="text-[11px] text-text-secondary mt-3 pt-2 border-t border-border flex justify-between">
+            <span>Thời lượng: 60p/ca kèm 1-1</span>
+            <span className="font-semibold text-emerald-600">Đúng lịch</span>
           </div>
-          <div className="text-[11px] text-text-secondary mt-1">Chuẩn 60 phút/ca kèm 1-1</div>
         </Card>
 
-        <Card className="p-4 bg-surface">
-          <div className="flex items-center justify-between text-text-secondary mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">Học viên đang phụ trách</span>
-            <Users className="w-4 h-4 text-emerald-600" />
+        <Card className="p-4 bg-surface h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-text-secondary mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Học viên phụ trách</span>
+              <Users className="w-4 h-4 text-emerald-600" />
+            </div>
+            <div className="text-2xl font-black text-text-primary tracking-tight">18 học viên</div>
           </div>
-          <div className="text-2xl font-black text-text-primary tracking-tight">18 học viên</div>
-          <div className="text-[11px] text-emerald-600 font-semibold mt-1">Tỷ lệ chuyên cần: 96%</div>
+          <div className="text-[11px] text-emerald-600 font-semibold mt-3 pt-2 border-t border-border flex justify-between">
+            <span>Tỷ lệ chuyên cần</span>
+            <span className="font-bold">96%</span>
+          </div>
         </Card>
 
-        <Card className="p-4 bg-slate-900 border-slate-700 text-white">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider">Đánh giá chất lượng</span>
-            <Award className="w-4 h-4 text-volt" />
+        <Card className="p-4 bg-slate-900 border-slate-700 text-white h-full flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-slate-400 mb-2">
+              <span className="text-xs font-bold uppercase tracking-wider">Đánh giá chất lượng</span>
+              <Award className="w-4 h-4 text-volt" />
+            </div>
+            <div className="text-2xl font-black text-volt tracking-tight">4.9 / 5.0 ★</div>
           </div>
-          <div className="text-2xl font-black text-volt tracking-tight">4.9 / 5.0 ★</div>
-          <div className="text-[11px] text-slate-300 mt-1">Dựa trên 68 phản hồi của học viên</div>
+          <div className="text-[11px] text-slate-300 mt-3 pt-2 border-t border-slate-800 flex justify-between">
+            <span>Phản hồi hội viên</span>
+            <span className="text-volt font-bold">68 đánh giá</span>
+          </div>
         </Card>
       </div>
 

@@ -74,13 +74,13 @@ export const MemberPlansPage: React.FC = () => {
             return (
               <Card
                 key={plan.id}
-                className={`flex flex-col justify-between p-6 transition-all ${
+                className={`flex flex-col justify-between p-6 transition-all h-full min-h-[420px] ${
                   plan.highlight
                     ? 'border-volt-border ring-2 ring-volt/40 shadow-volt'
                     : 'border-border bg-surface'
                 }`}
               >
-                <div>
+                <div className="flex flex-col flex-1">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] font-bold text-text-muted uppercase tracking-wider font-mono">
                       {plan.tier ? plan.tier.replace('TIER_', '') : 'STANDARD'}
@@ -92,11 +92,13 @@ export const MemberPlansPage: React.FC = () => {
                     )}
                   </div>
 
-                  <h3 className="font-black text-lg text-text-primary">{plan.name}</h3>
-                  <p className="text-xs text-text-secondary mt-1">{plan.description}</p>
+                  <div className="min-h-[50px]">
+                    <h3 className="font-black text-lg text-text-primary">{plan.name}</h3>
+                    <p className="text-xs text-text-secondary mt-0.5 line-clamp-1">{plan.description}</p>
+                  </div>
 
                   {/* Price */}
-                  <div className="my-5 p-3 rounded-md bg-slate-50 border border-border">
+                  <div className="my-4 p-3 rounded-md bg-slate-50 border border-border">
                     <div className="text-2xl font-black text-text-primary tracking-tight">
                       {plan.priceVnd.toLocaleString('vi-VN')}{' '}
                       <span className="text-xs font-bold text-text-secondary uppercase">VND</span>
@@ -108,7 +110,7 @@ export const MemberPlansPage: React.FC = () => {
                   </div>
 
                   {/* Privileges */}
-                  <div className="space-y-2.5 text-xs mb-6">
+                  <div className="space-y-2.5 text-xs mb-5 flex-1">
                     <div className="flex items-center gap-2 text-text-primary">
                       <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3" />
@@ -138,7 +140,7 @@ export const MemberPlansPage: React.FC = () => {
                 <Button
                   variant={plan.highlight ? 'volt' : 'secondary'}
                   size="md"
-                  className="w-full"
+                  className="w-full mt-auto"
                   onClick={() => {
                     setSelectedPlan(plan);
                     setCreatedOrder(null);
