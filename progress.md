@@ -90,7 +90,29 @@ Cập nhật liên tục theo từng mốc công việc hoàn thành.
       + Đã loại bỏ hoàn toàn widget đo mật độ phòng tập (`Mật độ phòng tập: 32/60`) trên header Cổng Hội viên (`MemberLayout`) và Cổng PT (`TrainerLayout`).
       + Điều chỉnh thanh chức năng điều hướng bên dưới (`<nav>`): Lớp nền đen than `#0A0D14` trải dài 100% toàn màn hình (`w-full bg-darksidebar-bg border-b border-darksidebar-border shadow-sm`), trong khi khối tab nội dung bên trong được bao bọc trong container `max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-2`, giúp các tab bên trong căn chỉnh chính xác tuyệt đối với lề trái - phải của các thẻ thông tin phía dưới.
       + Bổ sung thanh điều hướng đáy di động cho Cổng Huấn luyện viên (`TrainerLayout`) đồng bộ với Cổng Hội viên.
+      + Tinh gọn thanh bên Cổng Quản Lý (`Sidebar.tsx`): Đã xóa hoàn toàn khối "CỔNG TRỰC QUAN KHÁC" và khối chân trang chứa thông tin chi nhánh & nút đăng xuất thừa theo hình ảnh người dùng yêu cầu. Giờ đây thanh bên chỉ tập trung vào 9 danh mục nghiệp vụ quản trị chính, còn chức năng Đăng xuất và Chuyển đổi vai trò được quản lý tập trung trên thanh Header phía trên qua `UserDropdown`.
+    - **Tích hợp Chế độ Tối Toàn diện (Dark Mode)**:
+      + Đã tạo `ThemeContext` cung cấp hook `useTheme()`, tự động đồng bộ hóa class `dark` trên `<html>` và lưu cấu hình vào `localStorage`.
+      + Tái cấu trúc CSS Tokens (`globals.css` và `tailwind.config.js`) với biến động `--background`, `--surface`, `--border`, `--text-primary`, `--text-secondary`, giúp toàn bộ card, modal, bảng biểu, input tự động chuyển đổi sang giao diện tối thể thao sắc sảo.
+      + Bổ sung hàng công tắc bật/tắt Chế độ Tối chuẩn phong cách Facebook bên trong `UserDropdown.tsx` với switch trượt mượt mà, icon Sun/Moon và viền xanh Volt nổi bật.
 3. **Kiểm tra hoàn thành**:
    - `npx tsc -b`: 0 lỗi TypeScript.
-   - `npm run build`: Đóng gói 2151 modules thành công trong 7.36s.
+   - `npm run build`: Đóng gói 2152 modules thành công trong 7.39s.
    - Vite dev server hot-reload mượt mà tại `http://localhost:5173/`.
+
+### [2026-11-26] Tái thiết kế Toàn diện Trang chủ (Landing Page) theo Phong cách BLUEGYM
+1. **Khảo sát cấu trúc thực tế của BLUEGYM (bluegym.vn)**:
+   - Nghiên cứu chi tiết cấu trúc banner slider, các bộ môn GroupX (Body Pump, Body Combat, Zumba, Aerobics), chuyên mục Before & After và công cụ đo lường thể trạng BMI đặc trưng.
+2. **Nâng cấp Toàn diện Landing Page SmartGym**:
+   - **Hero Carousel thể thao bứt phá**: 3 slides lớn phong cách BlueGym ("CHÚNG TÔI LÀ SMARTGYM - TRANING TO DAY / TIÊU CHUẨN CỦA SỰ ĐỔI MỚI / LỚP GROUPX SÔI ĐỘNG"), hiệu ứng chuyển slide tự động, phím điều hướng và các nút CTA nổi bật.
+   - **Chuyên mục Lớp tập & Dịch vụ chuẩn BlueGym**: Thẻ lớn cho BODY PUMP, BODY COMBAT, ZUMBA, AEROBICS & YOGA, GYM & CARDIO MATRIX, PT 1 KÈM 1 kèm thông số calo và thời lượng.
+   - **Công cụ Tính Chỉ số BMI Tương tác Trực tiếp**: Nhập chiều cao, cân nặng, độ tuổi, giới tính -> Hiển thị kết quả BMI, thang đo chuẩn hóa, calo TDEE và lời khuyên tập luyện.
+   - **Before & After - Câu chuyện hội viên**: Minh chứng chuyển biến hình thể thực tế (giảm 14kg mỡ, tăng cơ thuần, tăng sức bền).
+   - **Bảng giá thẻ tập minh bạch**: Thẻ 1 tháng, Thẻ 3 tháng (Hot), Thẻ 1 năm VIP.
+   - **Công nghệ 4.0 độc quyền**: Tích hợp Kiosk Face ID <0.8s, AI CP-SAT, GiST lock, Giáo án số & Đánh giá sao.
+   - **Form Đăng ký tập thử 1 buổi miễn phí** kèm toast thông báo thành công.
+   - **Chân trang chuyên nghiệp**: Cơ sở chính, hotline 1900 6868, giờ mở cửa T2-CN, liên kết nhanh 4 cổng hệ thống.
+3. **Xác nhận chất lượng**:
+   - `npx tsc -b`: 0 lỗi TypeScript strict.
+   - `npm run build`: Đóng gói thành công trong 8.58s.
+   - Máy chủ Vite dev server hoạt động mượt mà tại `http://localhost:5173/`.

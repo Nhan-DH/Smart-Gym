@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { workoutService } from '../../mocks/services';
 import { WorkoutPlan } from '../../types';
-import { BookOpen, Dumbbell, Clock, User, CheckCircle2, Flame, Award } from 'lucide-react';
+import { BookOpen, Dumbbell, Clock, User, CheckCircle2, Flame, Award, ArrowLeft } from 'lucide-react';
 
 export const MemberWorkoutsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,8 +28,15 @@ export const MemberWorkoutsPage: React.FC = () => {
     <div className="space-y-6">
       {/* Top Header */}
       <div>
+        <button
+          type="button"
+          onClick={() => navigate('/app')}
+          className="text-xs font-semibold text-text-secondary hover:text-text-primary flex items-center gap-1.5 mb-2 transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Về Trang chủ hội viên
+        </button>
         <h1 className="text-2xl font-black text-text-primary tracking-tight flex items-center gap-2">
-          <BookOpen className="w-6 h-6 text-darksidebar-bg" />
+          <BookOpen className="w-6 h-6 text-darksidebar-bg dark:text-volt" />
           Giáo Án & Lộ Trình Bài Tập Cá Nhân
         </h1>
         <p className="text-sm text-text-secondary mt-1">

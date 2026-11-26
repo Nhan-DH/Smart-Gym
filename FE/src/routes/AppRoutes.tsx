@@ -36,11 +36,14 @@ import { TrainerWorkoutPlansPage } from '../features/trainer/TrainerWorkoutPlans
 // Kiosk Screen
 import { KioskPage } from '../features/kiosk/KioskPage';
 
+// Public Landing Page
+import { LandingPage } from '../features/landing/LandingPage';
+
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      {/* Root redirect */}
-      <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+      {/* Root Landing Page */}
+      <Route path="/" element={<LandingPage />} />
 
       {/* Auth Routes */}
       <Route element={<AuthLayout />}>

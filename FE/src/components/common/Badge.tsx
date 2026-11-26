@@ -13,6 +13,7 @@ const badgeVariants = cva(
         info: 'bg-status-info-bg text-status-info border-blue-200',
         neutral: 'bg-surface-subtle text-text-secondary border-border',
         primary: 'bg-primary-light text-primary border-primary-border',
+        volt: 'bg-volt/20 text-volt-dark dark:text-volt border-volt/40 font-bold',
       },
     },
     defaultVariants: {

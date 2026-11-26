@@ -186,16 +186,16 @@ export const KioskPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Exit to Manager Portal */}
+          {/* Quick Exit to Home / Manager Portal */}
           <button
             onClick={() => {
-              switchRole('MANAGER');
-              navigate('/admin/dashboard');
+              navigate('/');
             }}
-            title="Thoát Kiosk về Quản lý"
-            className="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+            title="Thoát Kiosk về Trang chủ SmartGym"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors text-xs font-semibold cursor-pointer"
           >
-            <LogOut className="w-4 h-4" />
+            <LogOut className="w-4 h-4 text-volt" />
+            <span className="hidden sm:inline">Thoát Kiosk</span>
           </button>
         </div>
       </header>

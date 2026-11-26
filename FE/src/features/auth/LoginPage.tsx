@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
-import { Lock, Mail, ShieldAlert, Dumbbell, Sparkles } from 'lucide-react';
+import { Lock, Mail, ShieldAlert, Dumbbell, Sparkles, ArrowLeft } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading } = useAuth();
@@ -46,6 +46,17 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div className="w-full max-w-[440px] bg-surface border border-border rounded-xl shadow-lg p-6 sm:p-8">
+      {/* Back to Home Link */}
+      <div className="mb-4">
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="inline-flex items-center gap-1.5 text-xs text-text-secondary hover:text-text-primary font-semibold transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Về trang chủ SmartGym
+        </button>
+      </div>
+
       {/* Brand Header */}
       <div className="mb-6 text-center space-y-2">
         <div className="w-12 h-12 rounded-lg bg-darksidebar-bg text-volt flex items-center justify-center font-black shadow-volt mx-auto">

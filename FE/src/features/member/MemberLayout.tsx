@@ -72,8 +72,8 @@ export const MemberLayout: React.FC = () => {
           </Button>
 
           {/* Role switcher for demo defense */}
-          <div className="flex items-center gap-1.5 text-xs bg-slate-50 border border-border px-2 py-1 rounded-md">
-            <Sparkles className="w-3.5 h-3.5 text-volt-dark" />
+          <div className="flex items-center gap-1.5 text-xs bg-surface-subtle border border-border px-2 py-1 rounded-md">
+            <Sparkles className="w-3.5 h-3.5 text-volt-dark dark:text-volt" />
             <select
               value={user.role}
               onChange={handleRoleChange}

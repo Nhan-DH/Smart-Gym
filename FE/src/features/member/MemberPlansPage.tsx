@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
@@ -14,9 +15,11 @@ import {
   DollarSign,
   AlertCircle,
   CheckCircle2,
+  ArrowLeft,
 } from 'lucide-react';
 
 export const MemberPlansPage: React.FC = () => {
+  const navigate = useNavigate();
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,8 +59,15 @@ export const MemberPlansPage: React.FC = () => {
     <div className="space-y-6">
       {/* Top Header */}
       <div>
+        <button
+          type="button"
+          onClick={() => navigate('/app')}
+          className="text-xs font-semibold text-text-secondary hover:text-text-primary flex items-center gap-1.5 mb-2 transition-colors cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" /> Về Trang chủ hội viên
+        </button>
         <h1 className="text-2xl font-black text-text-primary tracking-tight flex items-center gap-2">
-          <Package className="w-6 h-6 text-darksidebar-bg" />
+          <Package className="w-6 h-6 text-darksidebar-bg dark:text-volt" />
           Gói Tập & Đăng Ký Hội Viên
         </h1>
         <p className="text-sm text-text-secondary mt-1">

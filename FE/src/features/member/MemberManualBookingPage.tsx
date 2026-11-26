@@ -91,8 +91,15 @@ export const MemberManualBookingPage: React.FC = () => {
     <div className="space-y-6 max-w-3xl mx-auto">
       {/* Header */}
       <div>
+        <button
+          type="button"
+          onClick={() => navigate('/app/schedule')}
+          className="text-xs font-semibold text-text-secondary hover:text-text-primary flex items-center gap-1.5 mb-2 transition-colors cursor-pointer"
+        >
+          <ChevronLeft className="w-4 h-4" /> Quay lại Lịch tập của tôi
+        </button>
         <h1 className="text-2xl font-black text-text-primary tracking-tight flex items-center gap-2">
-          <CalendarDays className="w-6 h-6 text-darksidebar-bg" />
+          <CalendarDays className="w-6 h-6 text-darksidebar-bg dark:text-volt" />
           Đặt Lịch Tập Thủ Công (1 kèm 1)
         </h1>
         <p className="text-sm text-text-secondary mt-1">
@@ -280,7 +287,14 @@ export const MemberManualBookingPage: React.FC = () => {
                 Quay lại
               </Button>
             ) : (
-              <div />
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => navigate('/app/schedule')}
+                icon={<ChevronLeft className="w-4 h-4" />}
+              >
+                Quay lại Lịch tập
+              </Button>
             )}
 
             {step < 4 ? (

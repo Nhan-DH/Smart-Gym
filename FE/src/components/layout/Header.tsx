@@ -33,14 +33,14 @@ export const Header: React.FC = () => {
       {/* Right Controls */}
       <div className="flex items-center gap-4">
         {/* Quick Role Switcher for Demo & Defense */}
-        <div className="flex items-center gap-2 text-xs bg-slate-50 border border-border px-2.5 py-1 rounded-md">
-          <Sparkles className="w-3.5 h-3.5 text-volt-dark" />
+        <div className="flex items-center gap-2 text-xs bg-surface-subtle border border-border px-2.5 py-1 rounded-md">
+          <Sparkles className="w-3.5 h-3.5 text-volt-dark dark:text-volt" />
           <span className="text-text-secondary font-medium hidden md:inline">Vai trò demo:</span>
           <select
             value={user.role}
             onChange={handleRoleChange}
             aria-label="Chọn vai trò demo"
-            className="h-7 px-2 rounded bg-surface border border-border text-xs font-bold text-text-primary focus:outline-none focus:border-volt-dark cursor-pointer"
+            className="h-7 px-2 rounded bg-surface border border-border text-xs font-bold text-text-primary focus:outline-none focus:border-volt cursor-pointer"
           >
             <option value="MANAGER">Quản lý (Manager)</option>
             <option value="MEMBER">Hội viên (Member)</option>

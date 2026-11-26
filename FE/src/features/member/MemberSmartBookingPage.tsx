@@ -56,8 +56,14 @@ export const MemberSmartBookingPage: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      {/* Top Header */}
+      {/* Top Header with Back button */}
       <div>
+        <button
+          onClick={() => navigate('/app/schedule')}
+          className="text-xs font-semibold text-text-secondary hover:text-text-primary flex items-center gap-1.5 mb-2 transition-colors cursor-pointer"
+        >
+          <ArrowRight className="w-3.5 h-3.5 rotate-180" /> Quay lại Lịch tập của tôi
+        </button>
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-bold bg-slate-900 text-volt border border-slate-700 uppercase tracking-wider mb-2">
           <Cpu className="w-3.5 h-3.5 text-volt" /> Google OR-Tools CP-SAT Constraint Programming
         </div>

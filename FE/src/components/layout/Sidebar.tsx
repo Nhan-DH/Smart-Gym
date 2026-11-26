@@ -1,6 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
@@ -12,8 +11,6 @@ import {
   BarChart3,
   Settings,
   Dumbbell,
-  ExternalLink,
-  LogOut,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -36,14 +33,6 @@ const navItems: NavItem[] = [
 ];
 
 export const Sidebar: React.FC = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/auth/login');
-  };
-
   return (
     <aside className="w-[240px] shrink-0 h-screen bg-darksidebar-bg border-r border-darksidebar-border flex flex-col fixed left-0 top-0 z-30 select-none">
       {/* Brand Logo - Hybrid Athletic with Volt Accent */}
@@ -83,52 +72,7 @@ export const Sidebar: React.FC = () => {
             <span className="truncate">{item.label}</span>
           </NavLink>
         ))}
-
-        <div className="pt-4 mt-3 border-t border-darksidebar-border/60">
-          <div className="text-[10px] font-bold text-slate-500 px-3 mb-2 uppercase tracking-wider">
-            Cổng trực quan khác
-          </div>
-          <NavLink
-            to="/app"
-            className="flex items-center justify-between px-3 py-2 rounded-md text-xs text-darksidebar-text hover:text-white hover:bg-darksidebar-hover transition-colors"
-          >
-            <span className="truncate">Cổng Hội viên</span>
-            <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-          </NavLink>
-          <NavLink
-            to="/trainer"
-            className="flex items-center justify-between px-3 py-2 rounded-md text-xs text-darksidebar-text hover:text-white hover:bg-darksidebar-hover transition-colors"
-          >
-            <span className="truncate">Cổng Huấn luyện viên</span>
-            <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
-          </NavLink>
-          <NavLink
-            to="/kiosk"
-            className="flex items-center justify-between px-3 py-2 rounded-md text-xs text-volt font-medium hover:bg-darksidebar-hover transition-colors"
-          >
-            <span className="truncate">Màn hình Kiosk Check-in</span>
-            <ExternalLink className="w-3.5 h-3.5 text-volt" />
-          </NavLink>
-        </div>
       </nav>
-
-      {/* Footer Info & Logout Button */}
-      <div className="p-3.5 border-t border-darksidebar-border text-[11px] bg-darksidebar-surface/60 text-darksidebar-text space-y-2">
-        <div className="flex items-center justify-between">
-          <div className="font-semibold text-slate-200">Chi nhánh 01 (Cơ sở chính)</div>
-          <span className="w-2 h-2 rounded-full bg-status-success inline-block"></span>
-        </div>
-        <div className="text-[10px] text-slate-400">Sức chứa: 60 người • Hoạt động</div>
-        
-        {/* Quick Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 py-1.5 px-2 rounded bg-slate-900 hover:bg-red-950/80 text-slate-400 hover:text-red-400 border border-slate-800 transition-colors text-xs font-semibold"
-        >
-          <LogOut className="w-3.5 h-3.5" />
-          <span>Đăng xuất hệ thống</span>
-        </button>
-      </div>
     </aside>
   );
 };

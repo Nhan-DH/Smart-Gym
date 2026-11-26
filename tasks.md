@@ -94,6 +94,27 @@ Nguyên tắc quản trị: [AGENTS.md](file:///d:/WORKSPACE/Smart-Gym/AGENTS.md
     - Loại bỏ hoàn toàn widget mật độ phòng tập (`Mật độ phòng tập: 32/60`) trên header Cổng Hội viên (`MemberLayout`) và Cổng PT (`TrainerLayout`).
     - Điều chỉnh thanh điều hướng chức năng bên dưới (`nav`) với lớp nền đen trải dài 100% toàn màn hình (`w-full bg-darksidebar-bg border-b border-darksidebar-border shadow-sm`), trong khi các tab nội dung bên trong được bao bọc trong container `max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-2`, khớp hoàn hảo với chiều ngang của các thẻ thông tin bên dưới.
     - Bổ sung thanh điều hướng đáy di động cho Cổng PT (`TrainerLayout`) đồng bộ với Cổng Hội viên.
+    - Tinh gọn thanh bên Cổng Quản Lý (`Sidebar.tsx`): Xóa bỏ hoàn toàn khối "CỔNG TRỰC QUAN KHÁC" và phần chân trang (thông tin chi nhánh, nút đăng xuất thừa), giúp sidebar gọn gàng, thuần túy các module nghiệp vụ quản trị.
+  - [x] **111.11**: Xây dựng & Tích hợp Toàn diện Chế độ Tối (Dark Mode) cho Toàn Hệ thống:
+    - Xây dựng `ThemeContext.tsx` quản lý trạng thái `light` / `dark`, đồng bộ class `dark` trên `<html>`, lưu trữ tùy chọn bền vững qua `localStorage` và tự động nhận diện `prefers-color-scheme`.
+    - Cấu hình lại hệ thống CSS Variables trong `globals.css` và `tailwind.config.js` cho tokens `background`, `surface`, `border`, `text` để tự động biến đổi giao diện mượt mà.
+    - Tích hợp công tắc chuyển đổi Chế độ Tối (Dark Mode Toggle Switch) phong cách Facebook trực tiếp bên trong `UserDropdown.tsx` kèm biểu tượng Mặt trời/Mặt trăng và nhãn trạng thái sinh động. Tương thích đồng thời trên cả 3 cổng Quản lý, Hội viên và PT.
+  - [x] **111.12**: Xây dựng Trang chủ (Landing Page) SmartGym & Rà soát Hoàn thiện Nút Quay lại (Back Navigation Audit):
+    - Nghiên cứu các mô hình Smart Gym hàng đầu và xây dựng trang Landing Page 9 phân đoạn tại `FE/src/features/landing/LandingPage.tsx`: Sticky Header, Hero Section với chỉ số ticker thời gian thực, Bộ chuyển đổi tương tác 4 phân hệ (Member, PT, Manager, Kiosk), Bento Grid 4 trụ cột công nghệ (Face ID, CP-SAT, GiST lock, Giáo án số), Quy trình 3 bước, Bảng giá gói tập minh bạch, Thông tin cơ sở & Sức chứa 60 người, FAQ giải đáp chính sách và Footer thương hiệu.
+    - Kết nối route gốc `/` hiển thị trực tiếp `LandingPage`.
+    - Rà soát toàn bộ các phân hệ và bổ sung nút Quay lại (Back navigation buttons) tại cả 7 màn hình/luồng thao tác trọng yếu: `MemberManualBookingPage` (Header & Wizard Step 1), `MemberSmartBookingPage`, `LoginPage`, `KioskPage`, `MemberProfilePage`, `MemberPlansPage`, `MemberWorkoutsPage`.
+    - Tinh gọn Cổng Quản lý: Lược bỏ hoàn toàn khối liên kết thừa "CỔNG TRỰC QUAN KHÁC" và phần chân trang chi nhánh ở thanh bên `Sidebar.tsx`.
+    - Kiểm thử TypeScript strict đạt 0 lỗi (`npx tsc -b`) và đóng gói thành công (`npm run build`).
+  - [x] **111.13**: Tái thiết kế Toàn diện Landing Page theo chuẩn phong cách thể thao thực tế của [BLUEGYM](https://bluegym.vn/):
+    - Khảo sát trực tiếp cấu trúc nội dung, hình ảnh, phân vùng dịch vụ và các công cụ đặc trưng của BlueGym (`bluegym.vn`).
+    - Nâng cấp Hero Carousel thể thao bứt phá: 3 slides hoành tráng phong cách BlueGym ("CHÚNG TÔI LÀ SMARTGYM - TRANING TO DAY / TIÊU CHUẨN CỦA SỰ ĐỔI MỚI / LỚP GROUPX SÔI ĐỘNG"), nút chuyển slide và chỉ báo tự động.
+    - Tích hợp chuyên mục dịch vụ chuẩn BlueGym: BODY PUMP, BODY COMBAT, ZUMBA DANCE, AEROBICS & YOGA, GYM & CARDIO MATRIX, HUẤN LUYỆN VIÊN 1 KÈM 1 với bộ lọc danh mục và thông số calo/thời gian.
+    - Xây dựng Công cụ Tính Chỉ số BMI tương tác trực tiếp: Nhập Chiều cao (cm), Cân nặng (kg), Tuổi, Giới tính -> Phân tích BMI, phân loại thể trạng, calo tiêu thụ TDEE và đề xuất lộ trình tập luyện tức thì.
+    - Chuyên mục BEFORE & AFTER và Câu chuyện hội viên: Ghi nhận sự chuyển biến hình thể thực tế (giảm mỡ, tăng cơ, sức bền).
+    - Bảng giá thẻ tập minh bạch và hấp dẫn: Thẻ 1 tháng, Thẻ 3 tháng (Hot), Thẻ 1 năm VIP kèm quyền lợi gửi xe và locker.
+    - Hệ thống công nghệ 4.0 (Kiosk Face ID <0.8s, AI CP-SAT, GiST lock, Giáo án số) tích hợp hài hòa làm điểm nhấn độc quyền.
+    - Form Đăng ký tập thử 1 buổi miễn phí kèm thông báo phản hồi trực quan.
+    - Chân trang chi tiết: Giờ mở cửa T2-CN, hệ thống cơ sở, hotline 1900 6868, liên kết nhanh 4 cổng hệ thống.
 
 ---
 
